@@ -1,0 +1,5 @@
+{
+  "a1": {"name": "Artist One", "genres": ["indie pop"], "fetched_at": "2026-01-01T00:00:00+00:00"},
+  "a2": {"name": "Artist Two", "genres": ["indie rock"], "fetched_at": "2026-01-01T00:00:00+00:00"},
+  "a3": {"name": "Artist Three", "genres": ["synthpop"], "fetched_at": "2026-01-01T00:00:00+00:00"}
+}

@@ -1,0 +1,69 @@
+{
+  "info": {
+    "generated_on": "2026-01-01 00:00:00",
+    "slice": "0-5",
+    "version": "fixture-v1"
+  },
+  "playlists": [
+    {
+      "pid": 0,
+      "name": "Fixture Playlist 0",
+      "num_tracks": 3,
+      "tracks": [
+        {"pos": 0, "artist_name": "Artist One", "track_uri": "spotify:track:t1", "artist_uri": "spotify:artist:a1", "track_name": "Song One", "album_uri": "spotify:album:al1", "album_name": "Album One", "duration_ms": 200000},
+        {"pos": 1, "artist_name": "Artist One", "track_uri": "spotify:track:t2", "artist_uri": "spotify:artist:a1", "track_name": "Song Two", "album_uri": "spotify:album:al1", "album_name": "Album One", "duration_ms": 210000},
+        {"pos": 2, "artist_name": "Artist Two", "track_uri": "spotify:track:t3", "artist_uri": "spotify:artist:a2", "track_name": "Song Three", "album_uri": "spotify:album:al2", "album_name": "Album Two", "duration_ms": 195000}
+      ]
+    },
+    {
+      "pid": 1,
+      "name": "Fixture Playlist 1",
+      "num_tracks": 3,
+      "tracks": [
+        {"pos": 0, "artist_name": "Artist One", "track_uri": "spotify:track:t1", "artist_uri": "spotify:artist:a1", "track_name": "Song One", "album_uri": "spotify:album:al1", "album_name": "Album One", "duration_ms": 200000},
+        {"pos": 1, "artist_name": "Artist Two", "track_uri": "spotify:track:t3", "artist_uri": "spotify:artist:a2", "track_name": "Song Three", "album_uri": "spotify:album:al2", "album_name": "Album Two", "duration_ms": 195000},
+        {"pos": 2, "artist_name": "Artist Three", "track_uri": "spotify:track:t5", "artist_uri": "spotify:artist:a3", "track_name": "Song Five", "album_uri": "spotify:album:al3", "album_name": "Album Three", "duration_ms": 220000}
+      ]
+    },
+    {
+      "pid": 2,
+      "name": "Fixture Playlist 2",
+      "num_tracks": 2,
+      "tracks": [
+        {"pos": 0, "artist_name": "Artist One", "track_uri": "spotify:track:t2", "artist_uri": "spotify:artist:a1", "track_name": "Song Two", "album_uri": "spotify:album:al1", "album_name": "Album One", "duration_ms": 210000},
+        {"pos": 1, "artist_name": "Artist Two", "track_uri": "spotify:track:t4", "artist_uri": "spotify:artist:a2", "track_name": "Song Four", "album_uri": "spotify:album:al2", "album_name": "Album Two", "duration_ms": 205000}
+      ]
+    },
+    {
+      "pid": 3,
+      "name": "Fixture Playlist 3",
+      "num_tracks": 3,
+      "tracks": [
+        {"pos": 0, "artist_name": "Artist Two", "track_uri": "spotify:track:t3", "artist_uri": "spotify:artist:a2", "track_name": "Song Three", "album_uri": "spotify:album:al2", "album_name": "Album Two", "duration_ms": 195000},
+        {"pos": 1, "artist_name": "Artist Two", "track_uri": "spotify:track:t4", "artist_uri": "spotify:artist:a2", "track_name": "Song Four", "album_uri": "spotify:album:al2", "album_name": "Album Two", "duration_ms": 205000},
+        {"pos": 2, "artist_name": "Artist Three", "track_uri": "spotify:track:t6", "artist_uri": "spotify:artist:a3", "track_name": "Song Six", "album_uri": "spotify:album:al3", "album_name": "Album Three", "duration_ms": 230000}
+      ]
+    },
+    {
+      "pid": 4,
+      "name": "Fixture Playlist 4",
+      "num_tracks": 3,
+      "tracks": [
+        {"pos": 0, "artist_name": "Artist One", "track_uri": "spotify:track:t1", "artist_uri": "spotify:artist:a1", "track_name": "Song One", "album_uri": "spotify:album:al1", "album_name": "Album One", "duration_ms": 200000},
+        {"pos": 1, "artist_name": "Artist Three", "track_uri": "spotify:track:t5", "artist_uri": "spotify:artist:a3", "track_name": "Song Five", "album_uri": "spotify:album:al3", "album_name": "Album Three", "duration_ms": 220000},
+        {"pos": 2, "artist_name": "Artist Three", "track_uri": "spotify:track:t6", "artist_uri": "spotify:artist:a3", "track_name": "Song Six", "album_uri": "spotify:album:al3", "album_name": "Album Three", "duration_ms": 230000}
+      ]
+    },
+    {
+      "pid": 5,
+      "name": "Fixture Playlist 5",
+      "num_tracks": 4,
+      "tracks": [
+        {"pos": 0, "artist_name": "Artist One", "track_uri": "spotify:track:t2", "artist_uri": "spotify:artist:a1", "track_name": "Song Two", "album_uri": "spotify:album:al1", "album_name": "Album One", "duration_ms": 210000},
+        {"pos": 1, "artist_name": "Artist Two", "track_uri": "spotify:track:t3", "artist_uri": "spotify:artist:a2", "track_name": "Song Three", "album_uri": "spotify:album:al2", "album_name": "Album Two", "duration_ms": 195000},
+        {"pos": 2, "artist_name": "Artist Two", "track_uri": "spotify:track:t4", "artist_uri": "spotify:artist:a2", "track_name": "Song Four", "album_uri": "spotify:album:al2", "album_name": "Album Two", "duration_ms": 205000},
+        {"pos": 3, "artist_name": "Artist Three", "track_uri": "spotify:track:t5", "artist_uri": "spotify:artist:a3", "track_name": "Song Five", "album_uri": "spotify:album:al3", "album_name": "Album Three", "duration_ms": 220000}
+      ]
+    }
+  ]
+}
