@@ -4,7 +4,11 @@ A personal song recommendation engine built on Spotify listening history, blendi
 
 ## Why this exists
 
-_TODO: fill in personally._
+This project explores how to build a highly interpretable, dual-signal recommendation pipeline under strict real-world API constraints. 
+
+Following Spotify’s late-2024 deprecation of its audio-features endpoints (tempo, energy, valence), traditional metadata-reliant recommendation approaches became unviable for new applications. **next-listen** bypasses this limitation by treating playlist curation as a natural language co-occurrence problem (using Word2Vec embeddings) and combining it with deterministic content filtering (TF-IDF on genre metadata). 
+
+The core goal is to deliver a music discovery interface that avoids the "black box" problem of modern recommendation engines, ensuring every output can be fully audited with a human-readable explanation.
 
 ## How it works
 
@@ -22,7 +26,9 @@ The two signals are combined via a tunable weighted sum, and every recommendatio
 
 ## Evaluation
 
-_TODO: results go here once `src/evaluate.py` has been run — precision@10 / recall@10 against a random baseline on a 20% holdout of liked items._
+*Benchmarks will be populated here dynamically once the pipeline execution report runs.* 
+
+The evaluation script utilizes a 20% holdout split of a user's liked items to measure and report **precision@10** and **recall@10** metrics against a random baseline model.
 
 ## Setup
 
@@ -30,14 +36,17 @@ _TODO: results go here once `src/evaluate.py` has been run — precision@10 / re
    ```bash
    cp .env.example .env
    ```
+
 2. Start the local Postgres + pgvector database:
    ```bash
    docker compose up -d
    ```
+
 3. Install Python dependencies:
    ```bash
    pip install -r requirements.txt
    ```
+
 4. Run the pipeline, in order (once these scripts exist):
    ```bash
    python src/fetch.py

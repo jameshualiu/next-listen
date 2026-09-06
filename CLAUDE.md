@@ -1,9 +1,9 @@
 # CLAUDE.md — next-listen Context & Guidelines
 
 ## Project Intent & Working Style
-* **Purpose:** Personal ML/DS portfolio project recommending songs via Spotify history + NL query interface. 
-* **Design Philosophy:** Built for job interviews. Prefer **explainable, defensible choices** over black-box complexity. Every recommendation must output a human-readable "why".
-* **AI Protocol:** Start nontrivial tasks in **Plan Mode** before writing code. If something breaks, halt and re-plan.
+* **Purpose:** Personal ML/DS platform recommending songs via Spotify history + NL query interface. 
+* **Design Philosophy:** Prioritize **explainable, defensible machine learning architectures** over black-box complexity. Every recommendation must output a human-readable, deterministic audit trail explaining "why" it was selected.
+* **Execution Rules:** Strictly follow the multi-phase workflow defined in `agents.md` for branch creation, staging, and Pull Requests.
 * **Maintenance:** Update this file immediately whenever an architectural decision or directory structure changes.
 
 ## Critical Operational Commands
@@ -30,6 +30,7 @@
 
 ## Known Hard Constraints
 * **Spotify Deprecations:** Audio-features and audio-analysis endpoints return 403 errors for all apps created after Nov 27, 2024. **Do not design around or attempt to call them.**
+* **No Live Playlist Corpus:** As of the same Nov 2024 change (and further restricted Feb/March 2026), Featured Playlists, Category Playlists, and Related Artists are removed for new apps, and `GET /playlists/{id}/items` only returns track contents for playlists the authenticated user owns or collaborates on. There is no live path to a public playlist corpus. **Signal 1 trains on the Kaggle mirror of Spotify's own Million Playlist Dataset** (https://www.kaggle.com/datasets/himanshuwagh/spotify-million), downloaded manually into `data/raw/mpd/` (not scripted), on a configurable subset (default 5,000 playlists).
 * **History Cap:** `recently_played` is hard-capped at 50 tracks with no pagination. Lean on top-tracks aggregation for longer-term windows.
 * **Cold-Start Risk:** Songs missing from the training corpus will fail embedding lookups. Implement an explicit fallback path (e.g., fallback to genre-only similarity) rather than crashing.
 
@@ -43,12 +44,14 @@
 next-listen/
 ├── data/{raw,processed}/
 ├── src/
+│   ├── config.py            # Shared paths, env loading, logger
 │   ├── auth.py              # Spotify OAuth
-│   ├── fetch.py             # Pulls listening data + playlist corpus
+│   ├── fetch.py             # Pulls listening data + locates the MPD corpus
 │   ├── train_embeddings.py  # Word2Vec training on co-occurrence
 │   ├── genre_similarity.py  # TF-IDF + cosine
 │   ├── recommend.py         # Blends signals, generates ranked output with "why"
 │   └── evaluate.py          # Holdout precision@k / recall@k vs baseline
+├── tests/fixtures/          # Tiny fake dataset so evaluate.py's CI run is credential-free
 ├── notebooks/explore.ipynb  # Hyperparameter tuning/exploration only
 ├── results/                 # Evaluation output reports
 ├── README.md
