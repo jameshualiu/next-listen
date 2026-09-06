@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    container_name: next-listen-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: nextlisten
+      POSTGRES_PASSWORD: devpassword
+      POSTGRES_DB: nextlisten
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

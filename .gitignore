@@ -1,0 +1,13 @@
+.env
+.spotify_cache
+__pycache__/
+.venv/
+venv/
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+node_modules/
+.next/
+.DS_Store
+*.log
