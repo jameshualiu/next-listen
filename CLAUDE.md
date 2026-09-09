@@ -18,7 +18,7 @@
 * **Signal 1 (Embeddings):** Word2Vec-style song embeddings trained on a public playlist corpus using `gensim`. (1 playlist = 1 sentence of track IDs).
 * **Signal 2 (Genres):** TF-IDF + cosine similarity (`scikit-learn`) on artist genre metadata.
 * **Blending:** Tunable weighted sum of normalized Signal 1 + Signal 2 scores.
-* **Query Layer:** LLM intent extraction (genre + time window only). If ambiguous, ask clarifying questions instead of guessing.
+* **Query Layer:** LLM intent extraction (genre + time window only). If ambiguous, ask clarifying questions instead of guessing. Uses Gemini (`google-genai`, forced function-calling) for free-tier local dev; Anthropic Claude may be re-evaluated later once usage patterns are clearer.
 * **UX Confirmation:** Display parsed intent (e.g., "genre detected / mood not detected") for confirmation before processing.
 * **Evaluation:** Holdout test script (hide 20% of liked items, report precision@10 / recall@10 against a random baseline).
 

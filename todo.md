@@ -53,7 +53,7 @@ nothing depends on that file surviving.
 - [ ] Register `http://127.0.0.1:8080/callback` as a redirect URI in the
       Spotify Developer Dashboard (if not already done)
 - [ ] Fill in real `.env` (`cp .env.example .env`) with Spotify +
-      Anthropic credentials
+      Gemini credentials
 - [ ] Run `python src/auth.py` once to do the browser OAuth consent
 - [ ] Manually download the Kaggle MPD mirror and extract
       `mpd.slice.*.json` files into `data/raw/mpd/`
