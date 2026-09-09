@@ -17,9 +17,10 @@ import difflib
 from collections import defaultdict
 from dataclasses import dataclass
 
-import anthropic
 import numpy as np
 from gensim.models.keyedvectors import KeyedVectors
+from google import genai
+from google.genai import types as genai_types
 
 import config
 import fetch
@@ -44,34 +45,39 @@ TIME_WINDOW_SOURCES = {
 CANDIDATE_TOPN_EMBEDDING = 200
 CANDIDATE_TOPN_GENRE_ARTISTS = 20
 
-INTENT_MODEL = "claude-haiku-4-5"
-INTENT_TOOL = {
-    "name": "record_intent",
-    "description": (
+# Free-tier eligible via a Google AI Studio key; check aistudio.google.com
+# for whichever flash model is currently free/current if this drifts.
+INTENT_MODEL = "gemini-2.5-flash"
+INTENT_TOOL = genai_types.FunctionDeclaration(
+    name="record_intent",
+    description=(
         "Records the extracted genre and time-window intent from the "
         "user's natural-language song recommendation request."
     ),
-    "input_schema": {
-        "type": "object",
-        "properties": {
-            "genre": {
-                "type": ["string", "null"],
-                "description": "A single genre mentioned or implied by the query, or null if none is specified.",
-            },
-            "time_window": {
-                "type": ["string", "null"],
-                "enum": ["recent", "medium_term", "long_term", "all_time", None],
-                "description": "Which listening-history window the user means.",
-            },
-            "needs_clarification": {"type": "boolean"},
-            "clarifying_question": {
-                "type": ["string", "null"],
-                "description": "A specific question to ask if needs_clarification is true, else null.",
-            },
+    parameters=genai_types.Schema(
+        type=genai_types.Type.OBJECT,
+        properties={
+            "genre": genai_types.Schema(
+                type=genai_types.Type.STRING,
+                nullable=True,
+                description="A single genre mentioned or implied by the query, or null if none is specified.",
+            ),
+            "time_window": genai_types.Schema(
+                type=genai_types.Type.STRING,
+                nullable=True,
+                enum=["recent", "medium_term", "long_term", "all_time"],
+                description="Which listening-history window the user means.",
+            ),
+            "needs_clarification": genai_types.Schema(type=genai_types.Type.BOOLEAN),
+            "clarifying_question": genai_types.Schema(
+                type=genai_types.Type.STRING,
+                nullable=True,
+                description="A specific question to ask if needs_clarification is true, else null.",
+            ),
         },
-        "required": ["genre", "time_window", "needs_clarification", "clarifying_question"],
-    },
-}
+        required=["genre", "time_window", "needs_clarification", "clarifying_question"],
+    ),
+)
 INTENT_SYSTEM_PROMPT = """You extract exactly two pieces of intent from a user's request for song \
 recommendations: a genre, and a time window (one of: recent, medium_term, long_term, \
 all_time). Never infer mood, tempo, or energy -- that data isn't available for this system; \
@@ -330,17 +336,23 @@ def recommend(
 
 def extract_intent(query: str, known_genres: list) -> IntentResult:
     try:
-        client = anthropic.Anthropic(api_key=config.require_env("ANTHROPIC_API_KEY"))
-        response = client.messages.create(
+        client = genai.Client(api_key=config.require_env("GEMINI_API_KEY"))
+        response = client.models.generate_content(
             model=INTENT_MODEL,
-            max_tokens=512,
-            system=INTENT_SYSTEM_PROMPT,
-            tools=[INTENT_TOOL],
-            tool_choice={"type": "tool", "name": "record_intent"},
-            messages=[{"role": "user", "content": query}],
+            contents=query,
+            config=genai_types.GenerateContentConfig(
+                system_instruction=INTENT_SYSTEM_PROMPT,
+                tools=[genai_types.Tool(function_declarations=[INTENT_TOOL])],
+                tool_config=genai_types.ToolConfig(
+                    function_calling_config=genai_types.FunctionCallingConfig(
+                        mode=genai_types.FunctionCallingConfigMode.ANY,
+                        allowed_function_names=["record_intent"],
+                    )
+                ),
+            ),
         )
-        tool_use = next(block for block in response.content if block.type == "tool_use")
-        data = tool_use.input
+        function_call = response.candidates[0].content.parts[0].function_call
+        data = function_call.args
         return IntentResult(
             genre=data.get("genre"),
             time_window=data.get("time_window"),

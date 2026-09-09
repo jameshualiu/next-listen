@@ -8,4 +8,4 @@ uvicorn==0.52.4
 python-dotenv==1.2.3
 pandas==3.0.5
 numpy==2.5.2
-anthropic==1.4.0
+google-genai==1.51.0
